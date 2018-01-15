@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css"/>
+    <link href="assets/widget/bootstrap-table/bootstrap-table.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/widget/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="assets/widget/bootstrap-paginator/bootstrap-paginator.css">
+    <link rel="stylesheet" href="assets/css/adminStyle.css">
+    <title>账单管理</title>
+</head>
+<body>
+<div class="panel-body" style="padding-bottom:30px;">
+        <div class="toolbar_c clearF">
+            <label for="sendDate" class="toolbar_label">账单发送时间</label>
+            <div class="toolbar_component" style="width:150px;margin-right: 20px;" >
+                <input type="text" readonly class="form-control" id="sendDate">
+            </div>
+            <label for="keyWord" class="toolbar_label">请输入关键字</label>
+            <div class="toolbar_component" style="width:150px;margin-right: 20px;" >
+                <input type="text" class="form-control" id="keyWord">
+            </div>
+            <button class="btn btn-primary" onclick="gopage(this,1,1)">搜索</button>
+            <!--<div class="input-group toolbar_component" style="width:200px;" >
+                <input type="text" class="form-control" id="keyWord" placeholder="关键字">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary">搜索</button>
+                </span>
+            </div>-->
+        </div>
+    <table id="MyTable"></table>
+</div>
+<!--layer模态框-->
+<div class="" id="ios_style_add" style="display: none;">
+    <form class="form-horizontal" role="form" style="padding: 30px;">
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="form-field-1"> 学校名称 </label>
+
+            <div class="col-sm-9">
+                <input type="text" id="form-field-1" placeholder="Username" class="col-xs-10 col-sm-5"/>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label" for="form-field-2"> 学校ID </label>
+
+            <div class="col-sm-9">
+                <input type="password" id="form-field-2" placeholder="Password" class="col-xs-10 col-sm-5"/>
+            </div>
+        </div>
+
+    </form>
+</div>
+<a href="#" id="btn-scroll-up"
+   class="btn-scroll-up btn btn-sm btn-inverse"
+   style="background: #666; position: fixed; right: 0; bottom: 0;color:#fff;">
+    <i class="icon-double-angle-up icon-only bigger-110"></i>
+</a>
+<div style="overflow:hidden;">
+    <div id="paginator" style="float: right;padding-right: 15px;"></div>
+</div>
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script src="assets/widget/layer/layer.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/widget/bootstrap-paginator/bootstrap-paginator.js"></script>
+<script src="assets/widget/bootstrap-table/bootstrap-table.js"></script>
+<script src="assets/widget/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+<script src="assets/widget/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script src="assets/widget/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="assets/widget/bootstrap-paginator/myPaginatorConfig.js"></script>
+</body>
+<script>
+    /*初始化时间选择插件*/
+    $("#sendDate").datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView:2,
+        forceParse: 0,
+        showMeridian: 1,
+        format: 'yyyy-mm-dd'
+    });
+    //初始化分页控件----------分页
+    $('#paginator').bootstrapPaginator(PageOptions);
+    //分页跳转
+    function gopage(e,oldPage,newPage){
+        var keys = "";
+        //获取数据
+        $.ajax({
+            type:'get',
+            url:'indexAjax',
+            data:{page:newPage,pagesize:10,keys:keys},
+            dataType:'json',
+            success:function(res){
+                var data = res.datas;
+                var totpag = res.pages;
+                //刷新表格数据的函数
+                $('#MyTable').bootstrapTable('load',data)
+                $('#paginator').bootstrapPaginator({totalPages: totpag})
+            }
+        });
+
+    }
+    //表格生成自定义删除和修改按钮------表格
+    function operateFormatter(value, row, index) {
+        var lookBtn = '<button type="button" id="operate_look'+row.id+'" class="btn btn-primary  btn-sm" onclick="lookRow(\'' + row.id + '\')">查看</button> ';
+        var downloadBtn = '<button type="button" id="operate_download'+row.id+'" class="btn btn-primary  btn-sm" onclick="downloadRow(\'' + row.id + '\')">下载账单</button> ';
+        return lookBtn+downloadBtn;
+    }
+    //删除按钮处理函数
+    function lookRow(rowID) {
+        var ele=$("#operate_look"+rowID);
+        //跳转页面
+        //location.href="你的地址"+rowID;
+        console.log(rowID)
+    }
+    //修改按钮处理函数
+    function downloadRow(rowID) {
+        console.log(rowID)
+    }
+    $('#MyTable').bootstrapTable({
+        striped: true,//隔行变色
+        cache: false,//不缓存
+        search: false,//不启用搜索。因为不咋好用
+        showRefresh: false,
+        columns: [{
+            checkbox: true,
+            field: 'choose',
+        }, {
+            field: 'id',
+            title: 'Item ID'
+        }, {
+            field: 'name',
+            title: 'Item Name'
+        }, {
+            field: 'price',
+            title: 'Item Price'
+        }, {
+            field: 'price',
+            title: '操作',
+            formatter: operateFormatter,
+            events: window.operateEvents,
+            width: "150px",
+            align: "center"
+        }],
+        data: [{
+            id: 2,
+            name: 'Item 2',
+            price: '$2'
+        }]
+    });
+    $("#MyTable").on("check.bs.table", function (e, row, ele) {
+        //console.log(e, row,ele)
+        console.log($('#MyTable').bootstrapTable('getSelections'))//返回所选的行
+    })
+    /*初始化layer*/
+    function addSchool() {
+        layer.open({
+            type: 1,//页面层
+            title: '添加学校',
+            maxmin: true,
+            shadeClose: false, //点击遮罩关闭层
+            area: ['750px', ''],
+            content: $('#ios_style_add'),
+            btn: ['提交', '取消'],
+            yes: function (index, layero) {
+                return false;
+                var num = 0;
+                var str = "";
+                $("#ios_style_add input[type='text']").each(
+                    function (n) {
+                        if ($(this).val() == "") {
+
+                            layer.alert(str += ""
+                                + $(this).attr("name")
+                                + "不能为空！\r\n", {
+                                title: '提示框',
+                                icon: 0,
+                            });
+                            num++;
+                            return false;
+                        }
+                    });
+                if (num > 0) {
+                    return false;
+                }
+                //通过以上判断发送请求
+                $.post("${pageContext.request.contextPath}/message/upload/save",
+                    {
+                        "dlUrl": $('#dlUrl_ios').val(),
+                        "version": $('#version_ios').val(),
+                        "type": 2,
+                        "explain": $('#explain_ios').val()
+                    },
+                    function (data) {
+                        if (data.status == "0000") {
+                            location.href = "${pageContext.request.contextPath}/message/upload/list";
+                        } else {
+                            layer.alert(data.msg, {
+                                title: '提示框',
+                                icon: 0,
+                            });
+                        }
+                    })
+            }
+        });
+    }
+</script>
+</html>

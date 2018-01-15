@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/cIndexStyle.css">
+</head>
+<body>
+    <!--导航条-->
+    <div class="navbarContent" >
+        <div class="navbar clearF">
+            <img src="./assets/images/sft/sftlogo.png" alt="" class="logo">
+            <div class="navbarRight ">
+                <ul class="navList clearF">
+                    <li><a href="#" class="active">首页</a></li>
+                    <li><a href="#">产品</a></li>
+                    <li><a href="#">关于我们</a></li>
+                </ul>
+                <div class="NBLoginBtn">
+                    登录
+                </div>
+                <div class="NBApplyBtn" onclick="gobottom()">
+                    申请试用
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--banner*2-->
+    <div class="banner1">
+        <!--<img src="assets/images/sft/block2.png"/>-->
+    </div>
+    <div class="banner2">
+    </div>
+    <!--申請使用的banner-->
+    <div class="banner3" id="banner3">
+        <p class="banner3Title">申请使用</p>
+        <div class="inputC">
+            <input type="text" placeholder="学校名称">
+        </div>
+        <div class="inputC" >
+            <input type="text" placeholder="您的姓名">
+        </div>
+        <div class="inputC">
+            <input type="text" placeholder="您的手机号">
+        </div>
+        <div class="inputC">
+            <button class="submitApply" onclick="gobottom()">提交</button>
+        </div>
+        <div class="companyInfo">
+            <p>上海前景网络科技有限公司</p>
+            <p>
+                <span>注册信息</span>&nbsp;&nbsp;
+                <span>注册信息</span>&nbsp;&nbsp;
+                <span>注册信息</span>
+            </p>
+        </div>
+    </div>
+</body>
+<!--[if !IE]> -->
+
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+<![endif]-->
+
+<!--[if !IE]> -->
+
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>" + "<" + "/script>");
+</script>
+
+<!-- <![endif]-->
+
+<!--[if IE]>
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>" + "<" + "/script>");
+</script>
+<![endif]-->
+<script>
+    function gobottom(){
+        /*window.scrollTo(0,document.body.scrollHeight)
+        console.log(window)*/
+        $('html, body').animate({
+            scrollTop: $("#banner3").offset().top+170
+        }, 1000);
+    }
+</script>
+</html>

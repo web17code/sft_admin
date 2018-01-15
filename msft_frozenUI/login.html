@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name = "format-detection" content="telephone = no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=0" />
+    <title>用户登录</title>
+    <link rel="stylesheet" href="./css/frozen.css">
+    <link rel="stylesheet" href="./css/custom.css">
+</head>
+<body>
+<div class="ui-form ui-border-t">
+    <form id="login_form">
+        <div class="ui-form-item ui-form-item-pure ui-border-radius">
+            <input type="text" name="account" placeholder="学号">
+            <a href="#" class="ui-icon-close"></a>
+        </div>
+        <div class="ui-form-item ui-form-item-pure ui-border-radius mt2">
+            <input type="password" name="password" placeholder="密码">
+            <a href="#" class="ui-icon-close"></a>
+        </div>
+        <div class="longBtn">
+            <a class="ui-btn-lg ui-btn-primary" onclick="submitLogin()">
+                登录
+            </a>
+        </div>
+    </form>
+</div>
+<script src="./js/lib/zeptojs/zepto.min.js"></script>
+<script src="./js/frozen.js"></script>
+<script>
+	/*点x清除数据*/
+    $("#login_form a.ui-icon-close").click(function(){
+        $(this).prev().val("");
+    })
+    window.logintxt="";
+    //表单校验
+    function submitLogin(){
+    	var account=$('input[name="account"]').val().trim();
+    	var password=$('input[name="password"]').val().trim();
+    	if(password==""){
+    		window.logintxt="亲，密码不能为空！";
+    	}
+    	if(account==""){
+    		window.logintxt="亲，账号不能为空！";
+    	}
+    	if(window.logintxt==""){
+    		//去登陆$.ajax({})
+    	}else{
+    		//错误提示
+    		var dia=$.dialog({
+	            title:'',
+	            content:"<p style='text-align:center;'>"+window.logintxt+"</p>",
+	            button:["确认"]
+        	});
+    		window.logintxt="";
+    		return false;
+    	}
+	}
+</script>
+</body>
+</html>

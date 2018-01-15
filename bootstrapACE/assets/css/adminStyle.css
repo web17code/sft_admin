@@ -1,0 +1,53 @@
+.clearF:after{
+    content:"";
+    display:block;
+    clear:both;
+}
+.uploadBill{
+    margin-top: 10%;
+}
+.uploadBill img.excellogo{
+    display: block;
+    width:140px;
+    height: 140px;
+    margin:0 auto;
+    border-radius: 50%;
+}
+.uploadBill .uploadBtn{
+    background-color: #438EB9;
+    border-radius: 5px;
+    width: 150px;
+    height: 40px;
+    line-height: 40px;
+    color:#fff;
+    text-align: center;
+    margin:50px auto 0;
+    cursor: pointer;
+}
+#picker .webuploader-pick{
+    padding: 7px 15px;
+}
+
+.toolbar_c{
+    margin-top:20px;
+    margin-bottom: 20px;
+}
+.toolbar_c .toolbar_label{
+    float: left;
+    display: block;
+    line-height: 34px;
+}
+.toolbar_c .toolbar_component{
+    float: left;
+    margin-left: 10px;
+}
+.billDetail .spanTxt{
+    margin-right: 15px;
+    line-height: 34px;
+}
+.billDetail .rightbtn{
+    float:right;
+}
+.billDetailLayer .row{
+    margin-bottom:7px;
+}
